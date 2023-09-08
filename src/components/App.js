@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FeedbackOptions from './FeedbackOptions';
 import Statistics from './Statistics';
-import './App.css';
+import Notification from './Notification';
 
 class App extends Component {
   state = {
@@ -9,6 +9,9 @@ class App extends Component {
     neutral: 0,
     bad: 0,
   };
+
+  // Оцінки тепер задаємо як масив
+  options = ['good', 'neutral', 'bad'];
 
   handleLeaveFeedback = (option) => {
     this.setState((prevState) => {
@@ -20,13 +23,14 @@ class App extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
-    const totalFeedback = good + neutral + bad;
+    const totalFeedback = Object.values(this.state).reduce((acc, value) => acc + value, 0);
     const positivePercentage = totalFeedback === 0 ? 0 : Math.round((good / totalFeedback) * 100);
 
     return (
       <div className="App">
         <h1>Feedback App</h1>
-        <FeedbackOptions onLeaveFeedback={this.handleLeaveFeedback} />
+        {/* Передаємо options і onLeaveFeedback */}
+        <FeedbackOptions options={this.options} onLeaveFeedback={this.handleLeaveFeedback} />
         {totalFeedback > 0 ? (
           <Statistics
             good={good}
@@ -36,7 +40,7 @@ class App extends Component {
             positivePercentage={positivePercentage}
           />
         ) : (
-          <p>There is no feedback</p>
+          <Notification message="There is no feedback" />
         )}
       </div>
     );
