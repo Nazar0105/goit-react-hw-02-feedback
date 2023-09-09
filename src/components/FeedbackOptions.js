@@ -4,7 +4,6 @@ import styles from './FeedbackOptions.module.css';
 const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
     <div>
-      <h2>Leave Feedback</h2>
       {options.map((option) => (
         <button
           key={option}
@@ -20,3 +19,4 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => {
 };
 
 export default FeedbackOptions;
+
